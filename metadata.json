@@ -1,0 +1,8 @@
+{
+  "name": "Remix: R8時間割・個別時間割自動作成システム",
+  "description": "中学校の個別時間割（2週間分）の雛形にR8時間割のマスタデータを登録し、番号を入力するだけで自動的に誰のどの授業かを判定・時間を割るExcelシート（および時間割表）を自動生成、編集、Excel出力できるシステムです。",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

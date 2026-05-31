@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm 10mm 6mm 10mm; /* Maximize printable height for single-page fit */
+  }
+
+  /* 画面全体のデフォルトを印刷用に調整 */
+  body, html {
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    visibility: visible !important;
+  }
+
+  /* 印刷対象外（ヘッダー、サイドバー、操作パネル、ボタンなど）を完全に消去、画面レイアウトからも排除 */
+  header,
+  footer,
+  aside,
+  nav,
+  form,
+  .no-print,
+  button,
+  select,
+  .tabs-container,
+  .bg-slate-100,
+  .bg-white.border-b,
+  #schedule-importer-section,
+  .instructions-box {
+    display: none !important;
+  }
+
+  /* 印刷専用のエリアラッパーを有効化し、用紙幅に合わせて800pxグリッドを60%に縮小、1ページに美しく収める */
+  .printable-area-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    width: 800px !important; /* Base logical width */
+    margin: 0 auto !important;
+    padding: 0 !important;
+    transform: scale(0.82) !important; /* Scale to fit A4 perfectly */
+    transform-origin: top center !important;
+  }
+
+  .printable-area-wrapper * {
+    visibility: visible !important;
+  }
+
+  /* カード自体の内側パディングを印刷時は小さくして高さを節約 */
+  .printable-area-wrapper .p-6 {
+    padding: 10px 14px !important;
+  }
+
+  /* 横スクロールバーが印刷されないようにオーバーフロー要素を平坦化 */
+  .printable-area-wrapper .overflow-x-auto {
+    overflow: visible !important;
+    width: 800px !important;
+  }
+
+  /* 各講時の高さを少し縮め、2週間分を確実に1枚に収める */
+  .printable-area-wrapper .h-\[100px\] {
+    height: 56px !important;
+  }
+
+  /* 下校目安などの高さもコンパクトに縮める */
+  .printable-area-wrapper .min-h-\[58px\] {
+    min-height: 40px !important;
+  }
+
+  /* 各セルのパディングと間隔を極限までコンパクトに */
+  .printable-area-wrapper .p-2 {
+    padding: 2px 4px !important;
+  }
+
+  /* 曜日ヘッダー等の高さを小さく */
+  .printable-area-wrapper .h-\[52px\] {
+    height: 38px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+
+  /* 週タイトルのパディング・マージンを詰める */
+  .printable-area-wrapper .mb-6 {
+    margin-bottom: 8px !important;
+  }
+  .printable-area-wrapper .pb-4 {
+    padding-bottom: 4px !important;
+  }
+
+  /* クイック編集時のインライン手入力枠を平坦なテキストにする */
+  .printable-area-wrapper input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    text-align: center !important;
+    padding: 0 !important;
+    width: 100% !important;
+    pointer-events: none !important;
+    color: #475569 !important; /* スレートグレーで文字らしく見せる */
+  }
+
+  /* 印刷時は、番号の手入力枠（max-w-[56px]）を非表示にして、解決された教科名だけで美しく見せる */
+  .printable-area-wrapper input.max-w-\[56px\] {
+    display: none !important;
+  }
+
+  /* テキストセルの入力欄をスマートにフラットテキスト化 */
+  .printable-area-wrapper input.max-w-\[124px\],
+  .printable-area-wrapper input.max-w-\[120px\] {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+    text-align: center !important;
+    padding: 0 !important;
+    width: 100% !important;
+    pointer-events: none !important;
+    font-size: 11px !important;
+    font-weight: bold !important;
+    color: inherit !important;
+  }
+
+  /* 「空き」 placeholderなどを非表示 */
+  .printable-area-wrapper input::placeholder {
+    color: transparent !important;
+  }
+
+  /* 設定歯車・微細な操作ボタンは一切印刷しない */
+  .printable-area-wrapper button,
+  .printable-area-wrapper .opacity-0,
+  .printable-area-wrapper .group-hover\:opacity-100 {
+    display: none !important;
+  }
+
+  /* 備考エリアのアイコンやテキストを黒ずませず綺麗に保つ */
+  .printable-area-wrapper div[id^="notes-"] {
+    border: 1px solid #fee2e2 !important;
+    background-color: #fffafb !important;
+    padding: 8px 12px !important;
+    margin-top: 8px !important;
+  }
+
+  /* 改ページを絶対に避け、2週間のテーブル間に適度な間隔を持たせる */
+  .print-page-break {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    width: 800px !important;
+    margin-bottom: 10px !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* 各週の間の余白を極限までコンパクトにし、1ページに収める */
+  .printable-area-wrapper > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 10px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* 背景色・文字色を印刷時に強制的に反映する */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+}
